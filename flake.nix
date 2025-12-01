@@ -24,6 +24,10 @@
             ocamlPackages.odoc
             ocamlPackages.ocaml-lsp
             ocamlformat
+
+            ocamlPackages.base
+            ocamlPackages.core
+            ocamlPackages.janeStreet.stdio
           ];
         };
       });
