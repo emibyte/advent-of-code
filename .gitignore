@@ -34,3 +34,10 @@ setup.log
 
 # Local OPAM switch
 _opam/
+
+# direnv
+.envrc
+.direnv/
+
+# advent of code specific
+inputs/
