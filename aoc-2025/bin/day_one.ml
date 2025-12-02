@@ -14,7 +14,7 @@ let rotate old_turn_count turn_count direction =
     | Right -> old_turn_count + turn_count
   in
   let new_pos_no_wrap = aux direction in
-  new_pos_no_wrap #/ 100
+  new_pos_no_wrap#/100
 ;;
 
 let rotate_and_count_wraps old_turn_count turn_count direction =
@@ -23,7 +23,7 @@ let rotate_and_count_wraps old_turn_count turn_count direction =
     | Right -> old_turn_count + turn_count
   in
   let new_pos_no_wrap = aux direction in
-  let new_pos = new_pos_no_wrap #/ 100 in
+  let new_pos = new_pos_no_wrap#/100 in
   match direction with
   | Left ->
     if old_turn_count = 0
