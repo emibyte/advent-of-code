@@ -1,6 +1,6 @@
 (executables
- (public_names day_one)
- (names day_one)
+ (public_names day_one day_two)
+ (names day_one day_two)
  (libraries aoc_2025 base core stdio str))
 
 ;; (executable
