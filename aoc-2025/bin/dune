@@ -1,4 +1,9 @@
-(executable
- (public_name aoc-2025)
- (name main)
- (libraries aoc_2025 base core stdio))
+(executables
+ (public_names day_one)
+ (names day_one)
+ (libraries aoc_2025 base core stdio str))
+
+;; (executable
+;; (public_name aoc-2025)
+;; (name main)
+;; (libraries aoc_2025 base core stdio))
