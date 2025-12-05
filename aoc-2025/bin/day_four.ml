@@ -35,17 +35,39 @@ let can_be_accessed grid y x =
   count_rolls_surrounding < 4
 ;;
 
-(* NOTE: lowkey not sure why this works anymore, think through it again *)
-let part_one =
+let get_coords_removables grid =
   Array.foldi
-    ~init:0
+    ~init:[]
     ~f:(fun y acc row ->
       Array.foldi
         ~init:acc
         ~f:(fun x acc' ch ->
-          if can_be_accessed grid y x && Char.equal ch '@' then acc' + 1 else acc')
+          if can_be_accessed grid y x && Char.equal ch '@' then (y, x) :: acc' else acc')
         row)
     grid
 ;;
 
+(* NOTE: lowkey not sure why this works anymore, think through it again *)
+let get_count_removables grid = get_coords_removables grid |> List.length
+let part_one = get_count_removables grid
 let () = part_one |> Int.to_string |> print_endline
+
+let remove_removables grid coords =
+  let remove_removable y x = grid.(y).(x) <- '.' in
+  List.iter ~f:(fun (y, x) -> remove_removable y x) coords
+;;
+
+let part_two grid =
+  let rec sum acc =
+    let coords = get_coords_removables grid in
+    let count = List.length coords in
+    if count > 0
+    then (
+      remove_removables grid coords;
+      sum (acc + count))
+    else acc
+  in
+  sum 0
+;;
+
+let () = part_two grid |> Int.to_string |> print_endline
