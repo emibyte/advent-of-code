@@ -65,9 +65,7 @@ let part_one = List.map ~f:solve_homework homework_list |> List.fold ~init:0 ~f:
 let () = part_one |> Int.to_string |> print_endline
 
 let homework_list_p2 =
-  let input =
-    In_channel.read_lines "inputs/day_six.txt" |> List.map ~f:String.to_list
-  in
+  let input = In_channel.read_lines "inputs/day_six.txt" |> List.map ~f:String.to_list in
   let op_line = Option.value ~default:[] (List.last input) in
   let get_col_lengths ops =
     let is_op ch =
@@ -114,16 +112,19 @@ let parse_homework_p2 homework =
   let chars_to_str chs =
     let buf = Buffer.create (List.length chs) in
     List.iter ~f:(fun c -> Buffer.add_char buf c) chs;
-    Buffer.contents buf in
+    Buffer.contents buf
+  in
   let numbers =
     List.transpose nums
     |> Option.value ~default:[]
     |> List.map
-      ~f:(List.filter_map ~f:(fun x -> if Char.( <> ) ' ' x then Some x else None))
+         ~f:(List.filter_map ~f:(fun x -> if Char.( <> ) ' ' x then Some x else None))
     |> List.map ~f:(fun lst -> chars_to_str lst |> Int.of_string)
-  in (op, numbers)
+  in
+  op, numbers
 ;;
 
 let part_two =
   let parsed = List.map ~f:parse_homework_p2 homework_list_p2 in
   List.map ~f:solve_homework parsed |> List.fold ~init:0 ~f:( + )
+;;
