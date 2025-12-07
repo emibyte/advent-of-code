@@ -34,7 +34,9 @@ let merge_ranges fresh_ranges =
   in
   let rec aux acc = function
     | (low, high) :: (low2, high2) :: tl ->
-      if high >= low2 then aux acc ((low, max high high2) :: tl) else aux ((low, high) :: acc) ((low2, high2) :: tl)
+      if high >= low2
+      then aux acc ((low, max high high2) :: tl)
+      else aux ((low, high) :: acc) ((low2, high2) :: tl)
     | (low, high) :: [] -> (low, high) :: acc
     | [] -> acc
   in
@@ -44,7 +46,7 @@ let merge_ranges fresh_ranges =
 let part_two =
   let get_count_in_range (low, high) = high - low + 1 in
   let unique_ranges = merge_ranges fresh_ranges in
-  List.map ~f:get_count_in_range unique_ranges |> List.fold ~init: 0 ~f:(+)
+  List.map ~f:get_count_in_range unique_ranges |> List.fold ~init:0 ~f:( + )
+;;
 
 let () = part_two |> Int.to_string |> print_endline
-  
