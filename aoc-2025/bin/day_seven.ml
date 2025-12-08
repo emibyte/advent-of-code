@@ -51,12 +51,39 @@ let count_splits grid =
           Hash_set.remove beams col)
         splitter_cols)
     grid;
-  splits
+  !splits
 ;;
 
-let part_one =
-  let splits = count_splits grid in
-  !splits |> Int.to_string |> print_endline
-;;
-
+let part_one = count_splits grid |> Int.to_string |> print_endline
 let () = part_one
+
+(* TODO: look at this again, it produces the correct output but i feel like sth is still wrong *)
+let count_timelines grid =
+  let _, col_start = get_start grid in
+  let beam_count_per_col = Hashtbl.create (module Int) in
+  Hashtbl.add_exn beam_count_per_col ~key:col_start ~data:1;
+  Array.iter
+    ~f:(fun row ->
+      let find_splitters idx acc cell =
+        if Poly.( = ) cell Splitter then idx :: acc else acc
+      in
+      let splitter_cols = Array.foldi ~init:[] ~f:find_splitters row in
+      List.iter
+        ~f:(fun col ->
+          let update_or_insert key count =
+            Hashtbl.update beam_count_per_col key ~f:(function
+              | None -> count
+              | Some n -> n + count)
+          in
+          match Hashtbl.find_and_remove beam_count_per_col col with
+          | Some count ->
+            update_or_insert (col - 1) count;
+            update_or_insert (col + 1) count
+          | None -> ())
+        splitter_cols)
+    grid;
+  Hashtbl.data beam_count_per_col |> List.fold ~init:0 ~f:( + )
+;;
+
+let part_two = count_timelines grid |> Int.to_string |> print_endline
+let () = part_two
