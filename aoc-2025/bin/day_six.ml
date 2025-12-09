@@ -128,3 +128,5 @@ let part_two =
   let parsed = List.map ~f:parse_homework_p2 homework_list_p2 in
   List.map ~f:solve_homework parsed |> List.fold ~init:0 ~f:( + )
 ;;
+
+let () = part_two |> Int.to_string |> print_endline
