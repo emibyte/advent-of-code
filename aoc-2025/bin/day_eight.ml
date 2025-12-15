@@ -125,10 +125,11 @@ let run = function
 
 let () =
   let args = Sys.get_argv () in
-  if Array.length args < 2 then
-    failwith "pls provide which part to run \"one\" or \"two\""
-  else
-  match args.(1) with
-  | "one" -> run Part_one
-  | "two" -> run Part_two
-  | _ -> failwith "not a vaild part"
+  if Array.length args < 2
+  then failwith "pls provide which part to run \"one\" or \"two\""
+  else (
+    match args.(1) with
+    | "one" -> run Part_one
+    | "two" -> run Part_two
+    | _ -> failwith "not a vaild part")
+;;
