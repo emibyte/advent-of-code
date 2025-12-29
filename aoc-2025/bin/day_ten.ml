@@ -126,6 +126,22 @@ end = struct
 
   let epsilon = 1e-9
 
+  (* TODO: did not take all the time in the world to actually understand this algorithm beyond the basic idea
+           probably should do that at some point!!! *)
+  (**
+     We have a pivot and a current col we look at, bot are initialized to 0
+     We iterate as long as the pivot is inside the row range and col is inside the col range
+     For each iteration we do the following:
+       - Choose a specific row and the value in the current col
+       - We drop all the rows before the pivot and take the maximum value in the col
+       - If that value is 0 we add the col to our free variables (?) and increment col (not pivot)
+       - Otherwise:
+          - swap the row at our pivot with the row with the max value we found (put it higher in the matrix)
+          - add the col to our dependent variables
+          - get the pivot value at col
+          - normalize all the values in the pivot row from col to the end with pivot_value (so that the value at col is 1!!)
+          - increment pivot AND col
+  *)
   let gaussian_elimination matrix =
     let pivot = ref 0 in
     let col = ref 0 in
