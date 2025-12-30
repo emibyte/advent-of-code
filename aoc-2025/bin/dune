@@ -9,7 +9,8 @@
   day_seven
   day_eight
   day_nine
-  day_ten)
+  day_ten
+  day_eleven)
  (names
   day_one
   day_two
@@ -20,7 +21,8 @@
   day_seven
   day_eight
   day_nine
-  day_ten)
+  day_ten
+  day_eleven)
  (libraries aoc_2025 base core stdio str))
 
 ;; (executable
