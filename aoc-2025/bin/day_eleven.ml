@@ -23,7 +23,7 @@ module Graph = struct
   *)
   type t = Node.t Map.M(String).t
 
-  let empty : t = Map.empty (module String)
+  let _empty : t = Map.empty (module String)
 
   let create (alist : (string * Node.t) list) : t option =
     match Map.of_alist (module String) alist with
@@ -31,7 +31,7 @@ module Graph = struct
     | `Duplicate_key _ -> None
   ;;
 
-  let add (node : Node.t) (node_map : t) : t =
+  let _add (node : Node.t) (node_map : t) : t =
     match Map.add node_map ~key:node.name ~data:node with
     | `Ok new_node_map -> new_node_map
     | `Duplicate -> node_map
@@ -79,6 +79,9 @@ let part_one () =
   aux 0 0
 ;;
 
+let () = part_one () |> Int.to_string |> print_endline
+
+
 (* NOTE: as opposed to part one we actually need to find three segments that need to be together
          1. svr -> dac
          2. dac -> fft
@@ -121,3 +124,5 @@ let part_two () =
   let second_total = svr_to_fft * fft_to_dac * dac_to_out in
   first_total + second_total
 ;;
+
+let () = part_two () |> Int.to_string |> print_endline
