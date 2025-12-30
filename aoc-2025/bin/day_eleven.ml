@@ -50,7 +50,7 @@ let parse input =
 let part_one () =
   let graph = parse "inputs/day_eleven.txt" in
   (* this is a hack i increased it until the value didnt change (not good :c)
-     probably could also use a seen hashset?
+     probably could also use a seen hashset? (kinda did that in part_two, could use my part_two solution for part_one)
   *)
   let max_steps = 2 * (Map.length graph + 1) in
   let start_point = Map.find_exn graph "you" in
