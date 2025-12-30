@@ -92,17 +92,24 @@ let part_one () =
 let part_two () =
   let graph = parse "inputs/day_eleven.txt" in
   let rec aux (cur : string) (seen : (string, int) Hashtbl.t) (goal : string) : int =
-    if Hashtbl.mem seen cur then Hashtbl.find_exn seen cur
-    else if String.equal cur goal then 1
+    if Hashtbl.mem seen cur
+    then Hashtbl.find_exn seen cur
+    else if String.equal cur goal
+    then 1
     else (
-      let neighbors = match Map.find graph cur with
+      let neighbors =
+        match Map.find graph cur with
         | Some nodes -> nodes.outputs
-        | None -> [] 
+        | None -> []
       in
-      let res = List.sum (module Int) (List.map ~f:(fun n -> aux n seen goal) neighbors) ~f:(fun x -> x) in
+      let res =
+        List.sum
+          (module Int)
+          (List.map ~f:(fun n -> aux n seen goal) neighbors)
+          ~f:(fun x -> x)
+      in
       Hashtbl.add_exn seen ~key:cur ~data:res;
-      res 
-    )
+      res)
   in
   let svr_to_dac = aux "svr" (Hashtbl.create (module String)) "dac" in
   let dac_to_fft = aux "dac" (Hashtbl.create (module String)) "fft" in
@@ -113,3 +120,4 @@ let part_two () =
   let dac_to_out = aux "dac" (Hashtbl.create (module String)) "out" in
   let second_total = svr_to_fft * fft_to_dac * dac_to_out in
   first_total + second_total
+;;
