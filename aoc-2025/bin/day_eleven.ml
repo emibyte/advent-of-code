@@ -79,4 +79,37 @@ let part_one () =
   aux 0 0
 ;;
 
-let () = print_endline "Hello World"
+(* NOTE: as opposed to part one we actually need to find three segments that need to be together
+         1. svr -> dac
+         2. dac -> fft
+         3. fft -> out
+
+         OR
+         1. svr -> fft
+         2. fft -> dac
+         3. dac -> out
+*)
+let part_two () =
+  let graph = parse "inputs/day_eleven.txt" in
+  let rec aux (cur : string) (seen : (string, int) Hashtbl.t) (goal : string) : int =
+    if Hashtbl.mem seen cur then Hashtbl.find_exn seen cur
+    else if String.equal cur goal then 1
+    else (
+      let neighbors = match Map.find graph cur with
+        | Some nodes -> nodes.outputs
+        | None -> [] 
+      in
+      let res = List.sum (module Int) (List.map ~f:(fun n -> aux n seen goal) neighbors) ~f:(fun x -> x) in
+      Hashtbl.add_exn seen ~key:cur ~data:res;
+      res 
+    )
+  in
+  let svr_to_dac = aux "svr" (Hashtbl.create (module String)) "dac" in
+  let dac_to_fft = aux "dac" (Hashtbl.create (module String)) "fft" in
+  let fft_to_out = aux "fft" (Hashtbl.create (module String)) "out" in
+  let first_total = svr_to_dac * dac_to_fft * fft_to_out in
+  let svr_to_fft = aux "svr" (Hashtbl.create (module String)) "fft" in
+  let fft_to_dac = aux "fft" (Hashtbl.create (module String)) "dac" in
+  let dac_to_out = aux "dac" (Hashtbl.create (module String)) "out" in
+  let second_total = svr_to_fft * fft_to_dac * dac_to_out in
+  first_total + second_total
