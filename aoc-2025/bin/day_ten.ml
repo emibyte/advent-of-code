@@ -128,6 +128,7 @@ end = struct
 
   (* TODO: did not take all the time in the world to actually understand this algorithm beyond the basic idea
            probably should do that at some point!!! *)
+
   (**
      We have a pivot and a current col we look at, bot are initialized to 0
      We iterate as long as the pivot is inside the row range and col is inside the col range
