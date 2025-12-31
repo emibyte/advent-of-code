@@ -81,7 +81,6 @@ let part_one () =
 
 let () = part_one () |> Int.to_string |> print_endline
 
-
 (* NOTE: as opposed to part one we actually need to find three segments that need to be together
          1. svr -> dac
          2. dac -> fft
